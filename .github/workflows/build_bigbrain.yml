@@ -144,8 +144,8 @@ jobs:
                           text="⬇ Download",
                           size_hint_y=None,
                           height=dp(36),
-                          background_color=list(GREEN_DIM) + [1],
-                          color=list(BLACK_PURE) + [1],
+                          background_color=GREEN_DIM,
+                          color=BLACK_PURE,
                           font_size=dp(13)
                       )
                       dl_btn.bind(on_press=lambda x: self._download(media_path))
@@ -214,7 +214,7 @@ jobs:
                       text="",
                       size_hint_y=None,
                       height=dp(24),
-                      color=list(PURPLE_LIGHT) + [1],
+                      color=PURPLE_LIGHT,
                       font_size=dp(12)
                   )
                   self.add_widget(self.thinking_label)
@@ -237,7 +237,7 @@ jobs:
                       width=dp(44),
                       size_hint_y=None,
                       height=dp(44),
-                      background_color=list(PURPLE_MID) + [1],
+                      background_color=PURPLE_MID,
                       font_size=dp(20)
                   )
                   upload_btn.bind(on_press=self._open_file_chooser)
@@ -249,10 +249,10 @@ jobs:
                       multiline=False,
                       size_hint_y=None,
                       height=dp(44),
-                      background_color=list(GREY_DARK) + [1],
-                      foreground_color=list(WHITE_SOFT) + [1],
+                      background_color=GREY_DARK,
+                      foreground_color=WHITE_SOFT,
                       hint_text_color=list(PURPLE_LIGHT) + [0.5],
-                      cursor_color=list(GREEN_NEON) + [1],
+                      cursor_color=GREEN_NEON,
                       font_size=dp(14),
                       padding=[dp(12), dp(10)]
                   )
@@ -266,8 +266,8 @@ jobs:
                       width=dp(44),
                       size_hint_y=None,
                       height=dp(44),
-                      background_color=list(PURPLE_MID) + [1],
-                      color=list(GREEN_NEON) + [1],
+                      background_color=PURPLE_MID,
+                      color=GREEN_NEON,
                       font_size=dp(20),
                       bold=True
                   )
