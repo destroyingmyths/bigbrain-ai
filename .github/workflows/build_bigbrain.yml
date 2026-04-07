@@ -1,8 +1,8 @@
-name: Build Big Brain AI APK
+xbranches: [ master ]name: Build Big Brain AI APK
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
