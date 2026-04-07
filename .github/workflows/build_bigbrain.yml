@@ -38,7 +38,6 @@ jobs:
           mkdir -p $ANDROID_HOME/tools/bin
           ln -sf $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager $ANDROID_HOME/tools/bin/sdkmanager
           ln -sf $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager $ANDROID_HOME/tools/bin/avdmanager
-          chmod +x $ANDROID_HOME/tools/bin/sdkmanager
 
       - name: Accept SDK licenses
         run: |
