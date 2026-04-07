@@ -312,7 +312,9 @@ DEFAULT_STATE = {
 }
 
 def load_state():
-    # Try GitHub first, fallback to local
+    if os.path.exists(STATE_FILE):
+        with open(STATE_FILE) as f:
+            return json.load(f)
     if GITHUB_TOKEN:
         content, _ = _github_get_file("kernel_state.json")
         if content:
@@ -323,17 +325,13 @@ def load_state():
                 return state
             except Exception:
                 pass
-    if os.path.exists(STATE_FILE):
-        with open(STATE_FILE) as f:
-            return json.load(f)
     state = {k: v for k, v in DEFAULT_STATE.items()}
     state["rules"] = {str(k): {"weight": v["weight"], "locked": v["locked"]} for k, v in RULES.items()}
     save_state(state)
     return state
 
 def save_state(state):
-    state["last_updated"] = datetime.datetime.now().isoformat()
-    raw = json.dumps(state, indent=2)
+    state["last_updated"] = datetime.datetime.now().isoformat()    raw = json.dumps(state, indent=2)
     if len(raw.encode()) > MAX_STATE_BYTES:
         state = _compress_state(state)
         raw = json.dumps(state, indent=2)

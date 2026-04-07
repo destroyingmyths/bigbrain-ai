@@ -31,9 +31,7 @@ GREY_DARK   = get_color_from_hex("#1A0028")
 Window.clearcolor = BG_DARK
 
 try:
-    from kernel import OneMind
-    brain = OneMind(api_key=os.environ.get("GEMINI_API_KEY", ""))
-except Exception as e:
+   
     brain = None
 
 class MessageBubble(BoxLayout):
@@ -208,7 +206,17 @@ class BigBrainChat(BoxLayout):
 class BigBrainApp(App):
     def build(self):
         self.title = "Big Brain AI"
-        return BigBrainChat()
+        self.ui = BigBrainChat()
+        threading.Thread(target=self._init_brain, daemon=True).start()
+        return self.ui
+
+    def _init_brain(self):
+        global brain
+        try:
+            from kernel import OneMind
+            brain = OneMind(api_key=os.environ.get("GEMINI_API_KEY", ""))
+        except Exception as e:
+            pass
 
 if __name__ == "__main__":
     BigBrainApp().run()
