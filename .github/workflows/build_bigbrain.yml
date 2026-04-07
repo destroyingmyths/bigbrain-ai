@@ -1,8 +1,9 @@
+---
 name: Build Big Brain AI APK
 
-on:
+on:  # yamllint disable-line rule:truthy
   push:
-    branches: [ master ]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
