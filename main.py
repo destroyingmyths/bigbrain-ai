@@ -2,9 +2,7 @@ import os
 import sys
 import threading
 import shutil
-import App
 import traceback
-import sys
 
 # --- Kivy Imports ---
 from kivy.app import App
@@ -24,8 +22,12 @@ from kivy.graphics import Color, RoundedRectangle
 
 # Crash logger
 def log_crash(exc_type, exc_value, exc_tb):
-    with open('/storage/FD36-522F/One Brain AI/crash_log.txt', 'a') as f:
-        f.write(''.join(traceback.format_exception(exc_type, exc_value, exc_tb)))
+    try:
+        os.makedirs('/storage/FD36-522F/One Brain AI', exist_ok=True)
+        with open('/storage/FD36-522F/One Brain AI/crash_log.txt', 'a') as f:
+            f.write(''.join(traceback.format_exception(exc_type, exc_value, exc_tb)))
+    except Exception:
+        pass
 
 sys.excepthook = log_crash
 
@@ -43,6 +45,14 @@ TEAL_GLOW     = get_color_from_hex("#008080")
 # Soft Tones
 WHITE_SOFT    = get_color_from_hex("#E8D5FF")
 GREY_DARK     = get_color_from_hex("#1A1A1A")
+
+PURPLE_DEEP  = get_color_from_hex("#2E0854")
+BG_MID       = get_color_from_hex("#1A1A1A")
+PURPLE_LIGHT = get_color_from_hex("#C084FC")
+PURPLE_MID   = get_color_from_hex("#6A0DAD")
+GREEN_DIM    = get_color_from_hex("#355E3B")
+BLACK_PURE   = get_color_from_hex("#000000")
+GREEN_NEON   = get_color_from_hex("#00FF41")
 
 # --- Initialize Window ---
 Window.clearcolor = JET_BLACK
