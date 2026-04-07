@@ -331,11 +331,14 @@ def load_state():
     return state
 
 def save_state(state):
-    state["last_updated"] = datetime.datetime.now().isoformat()    raw = json.dumps(state, indent=2)
-    if len(raw.encode()) > MAX_STATE_BYTES:
-        state = _compress_state(state)
-        raw = json.dumps(state, indent=2)
-    # Save local
+    state["last_updated"] = datetime.datetime.now().isoformat()
+    raw = json.dumps(state, indent=2)
+    if len(raw.encode()) > 1024 * 1024:
+        # Add compression logic here if needed
+        pass
+    with open("STATE_FILE", "w") as f_out:
+        f_out.write(raw)
+    return state
     with open(STATE_FILE, "w") as f:
         f.write(raw)
     # Push to GitHub (non-blocking best-effort)
