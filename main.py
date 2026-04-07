@@ -2,6 +2,11 @@ import os
 import sys
 import threading
 import shutil
+import App
+import traceback
+import sys
+
+# --- Kivy Imports ---
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scrollview import ScrollView
@@ -17,28 +22,30 @@ from kivy.metrics import dp
 from kivy.clock import Clock
 from kivy.graphics import Color, RoundedRectangle
 
-import traceback
-import sys
-
 # Crash logger
 def log_crash(exc_type, exc_value, exc_tb):
-    with open('/sdcard/bigbrain_crash.log', 'a') as f:
+    with open('/storage/FD36-522F/One Brain AI/crash_log.txt', 'a') as f:
         f.write(''.join(traceback.format_exception(exc_type, exc_value, exc_tb)))
 
 sys.excepthook = log_crash
 
-BG_DARK     = get_color_from_hex("#0A000F")
-BG_MID      = get_color_from_hex("#110022")
-PURPLE_DEEP = get_color_from_hex("#2D0045")
-PURPLE_MID  = get_color_from_hex("#6B00A8")
-PURPLE_LIGHT= get_color_from_hex("#9B30FF")
-GREEN_NEON  = get_color_from_hex("#00FF88")
-GREEN_DIM   = get_color_from_hex("#00AA55")
-WHITE_SOFT  = get_color_from_hex("#E8D5FF")
-BLACK_PURE  = get_color_from_hex("#000000")
-GREY_DARK   = get_color_from_hex("#1A0028")
+# --- Theme Palette ---
+# Base Interface Colors
+JET_BLACK     = get_color_from_hex("#050505")
+MIDNIGHT_PURP = get_color_from_hex("#2E0854")
+HUNTER_GREEN  = get_color_from_hex("#355E3B")
 
-Window.clearcolor = BG_DARK
+# Selection & Active Accents
+NEON_GREEN    = get_color_from_hex("#00FF41")
+ELECTRIC_CYAN = get_color_from_hex("#00FFFF")
+TEAL_GLOW     = get_color_from_hex("#008080")
+
+# Soft Tones
+WHITE_SOFT    = get_color_from_hex("#E8D5FF")
+GREY_DARK     = get_color_from_hex("#1A1A1A")
+
+# --- Initialize Window ---
+Window.clearcolor = JET_BLACK
 
 brain = None
 
