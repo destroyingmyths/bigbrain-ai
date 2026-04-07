@@ -30,9 +30,7 @@ GREY_DARK   = get_color_from_hex("#1A0028")
 
 Window.clearcolor = BG_DARK
 
-try:
-   
-    brain = None
+brain = None
 
 class MessageBubble(BoxLayout):
     def __init__(self, text, is_user=True, media_path=None, **kwargs):
