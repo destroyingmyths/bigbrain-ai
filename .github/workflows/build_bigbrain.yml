@@ -24,6 +24,7 @@ jobs:
         run: |
           docker run --rm \
             -v ${{ github.workspace }}/app:/home/user/hostcwd \
+            -v /tmp/buildozer-cache:/home/user/.buildozer \
             kivy/buildozer:latest \
             android debug
 

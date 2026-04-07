@@ -15,9 +15,6 @@ android.ndk = 25b
 android.archs = arm64-v8a
 android.allow_backup = True
 android.accept_sdk_license = True
-android.build_tools_version = 34.0.0
-android.sdk_path = /usr/local/lib/android/sdk
-android.ndk_path = /usr/local/lib/android/sdk/ndk/25.2.9519653
 p4a.branch = develop
 
 [buildozer]
