@@ -5,7 +5,7 @@ package.domain = org.bigbrain
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,json
 version = 1.0.0
-requirements = python3,kivy==2.3.0,kivymd,pillow,requests,urllib3,android
+requirements = python3,kivy==2.3.0,pillow,requests,urllib3,android
 orientation = portrait
 fullscreen = 0
 android.features = android.hardware.camera
