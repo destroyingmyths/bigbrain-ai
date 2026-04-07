@@ -241,7 +241,8 @@ class BigBrainApp(App):
             from kernel import OneMind
             brain = OneMind(api_key=os.environ.get("GEMINI_API_KEY", ""))
         except Exception as e:
-            pass
+            Clock.schedule_once(lambda dt: setattr(self.ui.thinking_label, 'text', f'Brain error: {e}'), 0)
+
 
 if __name__ == "__main__":
     BigBrainApp().run()

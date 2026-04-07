@@ -63,8 +63,11 @@ else:
 MAX_STATE_BYTES = 32_768
 BUFFER_CAPACITY = 10
 
-os.makedirs(MEMORY_DIR, exist_ok=True)
-os.makedirs(MEDIA_DIR, exist_ok=True)
+try:
+    os.makedirs(MEMORY_DIR, exist_ok=True)
+    os.makedirs(MEDIA_DIR, exist_ok=True)
+except Exception:
+    pass
 
 # ─────────────────────────────────────────────
 # GITHUB STORAGE ENGINE
@@ -336,18 +339,15 @@ def save_state(state):
     if len(raw.encode()) > 1024 * 1024:
         # Add compression logic here if needed
         pass
-    with open("STATE_FILE", "w") as f_out:
-        f_out.write(raw)
-    return state
     with open(STATE_FILE, "w") as f:
         f.write(raw)
-    # Push to GitHub (non-blocking best-effort)
     if GITHUB_TOKEN:
         try:
             _, sha = _github_get_file("kernel_state.json")
             _github_put_file("kernel_state.json", raw, sha, "state update")
         except Exception:
             pass
+    return state
 
 def _compress_state(state):
     state["rewrite_buffer"] = []
