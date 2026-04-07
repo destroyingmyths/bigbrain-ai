@@ -17,6 +17,16 @@ from kivy.metrics import dp
 from kivy.clock import Clock
 from kivy.graphics import Color, RoundedRectangle
 
+import traceback
+import sys
+
+# Crash logger
+def log_crash(exc_type, exc_value, exc_tb):
+    with open('/sdcard/bigbrain_crash.log', 'a') as f:
+        f.write(''.join(traceback.format_exception(exc_type, exc_value, exc_tb)))
+
+sys.excepthook = log_crash
+
 BG_DARK     = get_color_from_hex("#0A000F")
 BG_MID      = get_color_from_hex("#110022")
 PURPLE_DEEP = get_color_from_hex("#2D0045")
