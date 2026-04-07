@@ -18,6 +18,8 @@ android.accept_sdk_license = True
 android.build_tools_version = 34.0.0
 android.sdk_path = /usr/local/lib/android/sdk
 android.ndk_path = /usr/local/lib/android/sdk/ndk/25.2.9519653
+p4a.branch = develop
+
 [buildozer]
 log_level = 2
 warn_on_root = 1
