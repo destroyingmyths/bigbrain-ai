@@ -163,3 +163,16 @@ def execute(req: UserRequest):
     with open("workspace/last_results.json", "w") as f:
         json.dump(results, f, indent=2)
     return {"plan": plan, "results": results}
+
+@app.post("/colab")
+def colab(req: UserRequest):
+    prompt = req.goal
+    os.makedirs("workspace", exist_ok=True)
+    out = "workspace/colab_image_gen.ipynb"
+
+    os.system(f"python3 colab/fill_colab.py \"{prompt}\" \"{out}\"")
+
+    return {
+        "status": "ok",
+        "notebook": out
+    }
