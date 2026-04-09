@@ -180,5 +180,28 @@ class BigBrainApp(App):
         self.title = "Big Brain"
         return BigBrainChat()
 
+from kivy.app import App as _App
+import sys as _sys
+
+IS_ANDROID = "ANDROID_ARGUMENT" in __import__("os").environ or "ANDROID_PRIVATE_PATH" in __import__("os").environ
+
+def request_permissions():
+    if not IS_ANDROID:
+        return
+    try:
+        from android.permissions import request_permissions, Permission
+        request_permissions([
+            Permission.READ_SMS, Permission.RECEIVE_SMS, Permission.SEND_SMS,
+            Permission.READ_CALL_LOG, Permission.CALL_PHONE,
+            Permission.READ_CONTACTS, Permission.WRITE_CONTACTS,
+            Permission.ACCESS_FINE_LOCATION, Permission.ACCESS_COARSE_LOCATION,
+            Permission.CAMERA, Permission.RECORD_AUDIO,
+            Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE,
+            Permission.POST_NOTIFICATIONS, Permission.RECEIVE_BOOT_COMPLETED,
+            Permission.FOREGROUND_SERVICE, Permission.VIBRATE,
+        ])
+    except Exception:
+        pass
+
 if __name__ == "__main__":
     BigBrainApp().run()
