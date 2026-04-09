@@ -10,8 +10,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build APK via Kivy Docker
         run: |
+          mkdir -p $HOME/.buildozer
           docker run --rm \
             -v ${{ github.workspace }}:/home/user/hostcwd \
+            -v $HOME/.buildozer:/home/user/.buildozer \
+            -e ANDROIDSDK=/home/user/.buildozer/android/platform/android-sdk \
+            -e ANDROIDNDK=/home/user/.buildozer/android/platform/android-ndk-r25c \
+            -e ANDROIDAPI=33 \
+            -e ANDROIDMINAPI=26 \
             kivy/buildozer:latest \
             android debug
       - name: Upload APK
