@@ -11,12 +11,11 @@ fullscreen = 0
 android.permissions = INTERNET
 android.api = 33
 android.minapi = 26
-android.ndk = 27.3.13750724
-android.sdk_path = /usr/local/lib/android/sdk
-android.ndk_path = /usr/local/lib/android/sdk/ndk/27.3.13750724
+android.ndk = 25c
 android.archs = arm64-v8a
 android.accept_sdk_license = True
-p4a.branch = develop
+android.sdk_path = /home/user/.buildozer/android/platform/android-sdk
+android.ndk_path = /home/user/.buildozer/android/platform/android-ndk-r25c
 [buildozer]
 log_level = 2
 warn_on_root = 1
