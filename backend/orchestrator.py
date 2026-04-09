@@ -181,4 +181,24 @@ def colab(req: UserRequest):
     return {
         "status": "ok",
         "notebook": out
+
+@app.post("/upload")
+async def upload(files: list[UploadFile] = File(...)):
+    os.makedirs("workspace/uploads", exist_ok=True)
+    stored = {}
+
+    for f in files:
+        data = await f.read()
+        path = f"workspace/uploads/{f.filename}"
+        with open(path, "wb") as out:
+            out.write(data)
+
+        stored[f.filename] = base64.b64encode(data).decode()
+
+    with open("workspace/last_uploads.json", "w") as meta:
+        json.dump(stored, meta, indent=2)
+
+    return {
+        "status": "ok",
+        "files": list(stored.keys())
     }
