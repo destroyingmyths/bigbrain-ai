@@ -87,8 +87,9 @@ def _check_notification_listener(callback=None):
     try:
         from jnius import autoclass
         PythonActivity = autoclass("org.kivy.android.PythonActivity")
+        Settings = autoclass("android.provider.Settings$Secure")
         context = PythonActivity.mActivity
-        flat = android.provider.Settings.Secure.getString(
+        flat = Settings.getString(
             context.getContentResolver(), "enabled_notification_listeners"
         )
         if flat and context.getPackageName() in flat:
