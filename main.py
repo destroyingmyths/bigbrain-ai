@@ -72,7 +72,7 @@ def request_all_permissions(callback=None):
             Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE,
             Permission.POST_NOTIFICATIONS, Permission.RECEIVE_BOOT_COMPLETED,
             Permission.FOREGROUND_SERVICE, Permission.VIBRATE,
-            Permission.ACCESS_NETWORK_STATE, Permission.INTERNET,
+            
         ]
         def _done(permissions, grants):
             _check_notification_listener(callback)
