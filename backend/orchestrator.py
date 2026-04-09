@@ -3,6 +3,7 @@ from pydantic import BaseModel
 import requests, json, os
 from typing import Dict, Any, Callable
 from tools import image_gen
+from tools import doc_analyze
 app = FastAPI()
 
 LLM_URL = "http://127.0.0.1:8080/completion"
@@ -100,6 +101,11 @@ def tool_text(task: dict, context: dict) -> dict:
 @tool("image_gen")
 def tool_image_gen(task: dict, context: dict) -> dict:
     return image_gen.run(task, context)
+
+@tool("doc_analyze")
+def tool_doc_analyze(task: dict, context: dict) -> dict:
+    return doc_analyze.run(task, context)
+
 # ---------------- Planner ----------------
 
 def make_plan(goal: str) -> dict:
