@@ -2,6 +2,9 @@ import os
 import sys
 import threading
 import shutil
+import traceback
+
+# --- Kivy Imports ---
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scrollview import ScrollView
@@ -17,24 +20,44 @@ from kivy.metrics import dp
 from kivy.clock import Clock
 from kivy.graphics import Color, RoundedRectangle
 
-BG_DARK     = get_color_from_hex("#0A000F")
-BG_MID      = get_color_from_hex("#110022")
-PURPLE_DEEP = get_color_from_hex("#2D0045")
-PURPLE_MID  = get_color_from_hex("#6B00A8")
-PURPLE_LIGHT= get_color_from_hex("#9B30FF")
-GREEN_NEON  = get_color_from_hex("#00FF88")
-GREEN_DIM   = get_color_from_hex("#00AA55")
-WHITE_SOFT  = get_color_from_hex("#E8D5FF")
-BLACK_PURE  = get_color_from_hex("#000000")
-GREY_DARK   = get_color_from_hex("#1A0028")
+# Crash logger
+def log_crash(exc_type, exc_value, exc_tb):
+    try:
+        os.makedirs('/storage/FD36-522F/One Brain AI', exist_ok=True)
+        with open('/storage/FD36-522F/One Brain AI/crash_log.txt', 'a') as f:
+            f.write(''.join(traceback.format_exception(exc_type, exc_value, exc_tb)))
+    except Exception:
+        pass
 
-Window.clearcolor = BG_DARK
+sys.excepthook = log_crash
 
-try:
-    from kernel import OneMind
-    brain = OneMind(api_key=os.environ.get("GEMINI_API_KEY", ""))
-except Exception as e:
-    brain = None
+# --- Theme Palette ---
+# Base Interface Colors
+JET_BLACK     = get_color_from_hex("#050505")
+MIDNIGHT_PURP = get_color_from_hex("#2E0854")
+HUNTER_GREEN  = get_color_from_hex("#355E3B")
+
+# Selection & Active Accents
+NEON_GREEN    = get_color_from_hex("#00FF41")
+ELECTRIC_CYAN = get_color_from_hex("#00FFFF")
+TEAL_GLOW     = get_color_from_hex("#008080")
+
+# Soft Tones
+WHITE_SOFT    = get_color_from_hex("#E8D5FF")
+GREY_DARK     = get_color_from_hex("#1A1A1A")
+
+PURPLE_DEEP  = get_color_from_hex("#2E0854")
+BG_MID       = get_color_from_hex("#1A1A1A")
+PURPLE_LIGHT = get_color_from_hex("#C084FC")
+PURPLE_MID   = get_color_from_hex("#6A0DAD")
+GREEN_DIM    = get_color_from_hex("#355E3B")
+BLACK_PURE   = get_color_from_hex("#000000")
+GREEN_NEON   = get_color_from_hex("#00FF41")
+
+# --- Initialize Window ---
+Window.clearcolor = JET_BLACK
+
+brain = None
 
 class MessageBubble(BoxLayout):
     def __init__(self, text, is_user=True, media_path=None, **kwargs):
@@ -208,7 +231,18 @@ class BigBrainChat(BoxLayout):
 class BigBrainApp(App):
     def build(self):
         self.title = "Big Brain AI"
-        return BigBrainChat()
+        self.ui = BigBrainChat()
+        threading.Thread(target=self._init_brain, daemon=True).start()
+        return self.ui
+
+    def _init_brain(self):
+        global brain
+        try:
+            from kernel import OneMind
+            brain = OneMind(api_key=os.environ.get("GEMINI_API_KEY", ""))
+        except Exception as e:
+            Clock.schedule_once(lambda dt: setattr(self.ui.thinking_label, 'text', f'Brain error: {e}'), 0)
+
 
 if __name__ == "__main__":
     BigBrainApp().run()
